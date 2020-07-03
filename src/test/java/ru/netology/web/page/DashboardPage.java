@@ -3,6 +3,9 @@ package ru.netology.web.page;
 
 import com.codeborne.selenide.SelenideElement;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -23,6 +26,19 @@ public class DashboardPage {
     public CartTransfer fromTransfer() {
         fromButton.click();
         return new CartTransfer();
+    }
+
+    public int getBalance() {
+        String balance = $(".list__item [data-test-id=\"92df3f1c-a033-48e6-8390-206f6b1f56c0\"]").getText();
+        String[] substring = balance.split(",");
+        String sub = substring[substring.length - 1];
+        String s = sub.replaceAll("\\D+", "");
+        return Integer.parseInt(s);
+    }
+
+
+    public int getExpectedBalance(int transfer) {
+        return getBalance() + transfer;
     }
 
 }

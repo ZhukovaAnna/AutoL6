@@ -8,6 +8,7 @@ import ru.netology.web.page.DashboardPage;
 import ru.netology.web.page.LoginPage;
 
 import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FormTest {
     @Test
@@ -19,8 +20,11 @@ public class FormTest {
         verificationPage.validVerify(verificationCode);
         val dashboardPage = new DashboardPage();
         dashboardPage.toTransfer();
-        val cardTransfer = new CartTransfer();
-        cardTransfer.Transfer(DataHelper.getCardInfo(String.valueOf(200)));
+        val cartTransfer = new CartTransfer();
+        cartTransfer.Transfer(DataHelper.getCardInfo(String.valueOf(200)));
+        val expected = dashboardPage.getExpectedBalance(200);
+        val actual = dashboardPage.getExpectedBalance(200);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -33,7 +37,7 @@ public class FormTest {
         val dashboardPage = new DashboardPage();
         dashboardPage.toTransfer();
         val cardTransfer = new CartTransfer();
-        val cardTransferInfo = new DataHelper.CardInfo("200","");
+        val cardTransferInfo = new DataHelper.CardInfo("200", "");
         cardTransfer.invalidTransfer(cardTransferInfo);
     }
 
@@ -47,7 +51,7 @@ public class FormTest {
         val dashboardPage = new DashboardPage();
         dashboardPage.toTransfer();
         val cardTransfer = new CartTransfer();
-        val cardTransferInfo = new DataHelper.CardInfo("","5559000000000002");
+        val cardTransferInfo = new DataHelper.CardInfo("", "5559000000000002");
         cardTransfer.invalidTransfer(cardTransferInfo);
     }
 
@@ -59,9 +63,9 @@ public class FormTest {
         val verificationCode = DataHelper.getVerificationCodeFor(authInfo);
         verificationPage.validVerify(verificationCode);
         val dashboardPage = new DashboardPage();
-        dashboardPage.fromTransfer();
+        dashboardPage.toTransfer();
         val cardTransfer = new CartTransfer();
-        val cardTransferInfo = new DataHelper.CardInfo("200","5559000000000005");
+        val cardTransferInfo = new DataHelper.CardInfo("200", "5559000000000005");
         cardTransfer.invalidTransfer(cardTransferInfo);
     }
 
