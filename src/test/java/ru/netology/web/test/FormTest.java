@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class FormTest {
     @Test
     void shouldTransferMoney() {
+        val transfer =200;
         val loginPage = open("http://localhost:9999", LoginPage.class);
         val authInfo = DataHelper.getAuthInfo();
         val verificationPage = loginPage.validLogin(authInfo);
@@ -21,9 +22,9 @@ public class FormTest {
         val dashboardPage = new DashboardPage();
         dashboardPage.toTransfer();
         val cartTransfer = new CartTransfer();
-        cartTransfer.Transfer(DataHelper.getCardInfo(String.valueOf(200)));
-        val expected = dashboardPage.getExpectedBalance(200);
-        val actual = dashboardPage.getExpectedBalance(200);
+        cartTransfer.transfer(DataHelper.getCardInfo(String.valueOf(transfer)));
+        val expected = dashboardPage.getExpectedBalance(transfer);
+        val actual = dashboardPage.getBalance()+transfer;
         assertEquals(expected, actual);
     }
 
@@ -80,7 +81,7 @@ public class FormTest {
         dashboardPage.toTransfer();
         val cartTransfer = new CartTransfer();
         val cartTransferInfo = DataHelper.getCardInfo(String.valueOf(0));
-        cartTransfer.Transfer(cartTransferInfo);
+        cartTransfer.transfer(cartTransferInfo);
 
     }
 

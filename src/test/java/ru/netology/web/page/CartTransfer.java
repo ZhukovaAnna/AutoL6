@@ -19,7 +19,7 @@ public class CartTransfer {
         heading.shouldBe(visible);
     }
 
-    public DashboardPage Transfer(DataHelper.CardInfo info) {
+    public DashboardPage transfer(DataHelper.CardInfo info) {
         balance.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         balance.doubleClick().sendKeys(Keys.DELETE);
         balance.setValue(info.getBalance());
